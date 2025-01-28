@@ -30,6 +30,6 @@ docker-compose up -d
 
 Документация доступна по адресу ```http://127.0.0.1:8000/docs```
 
-### Кошелёк
+### Роутеры
 + **POST**   ```/api/v1/wallets/<WALLET_UUID>/operation``` выполнение операции списания/начисления
 + **GET** ```/api/v1/wallets/{WALLET_UUID}``` просмотр баланса кошелька

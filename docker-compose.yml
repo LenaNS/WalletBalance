@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: DBWalletBalance
+    networks:
+        - wallet-network
+    ports:
+      - "5433:5432"
+  
+  app:
+    build: .
+    environment:
+      HOST: postgres
+      PORT: 5433
+      DB: DBWalletBalance
+      USERNAME: postgres
+      PASSWORD: admin
+    depends_on:
+      - postgres
+    networks:
+        - wallet-network
+    ports:
+      - "8080:8000"
+
+networks:
+    wallet-network:

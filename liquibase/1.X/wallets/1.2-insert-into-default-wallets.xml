@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
+                   logicalFilePath="liquibase/1.X/changelog.xml">
+
+    <changeSet id="1.2-insert-into-default-wallets"
+               author="LenaNS">
+
+        <insert schemaName="public" tableName="wallets">
+            <column name="balance" value="100" />
+        </insert>
+        <insert schemaName="public" tableName="wallets">
+            <column name="balance" value="1000" />
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,6 +1,8 @@
 from uuid import UUID
 
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.future import select
+
 
 from src.db.db import async_session
 from src.exceptions.exception import WalletOperationError
@@ -39,13 +41,18 @@ class WalletRepository:
         :return: Экземпляр Wallet или None, если кошелька не существует.
         """
         async with async_session() as session:
-            instance = await session.get(self.model, uuid)
-            if instance:
-                instance.balance += amount
-                try:
-                    await session.commit()
-                    return instance
-                except IntegrityError as ex:
-                    raise WalletOperationError
+            async with session.begin():
+                instance = await session.execute(
+                    select(self.model).where(self.model.id == uuid).with_for_update()
+                )
+                instance = instance.scalar()
+                # instance = await session.get(self.model, uuid)
+                if instance:
+                    instance.balance += amount
+                    try:
+                        await session.commit()
+                        return instance
+                    except IntegrityError as ex:
+                        raise WalletOperationError
 
         return None

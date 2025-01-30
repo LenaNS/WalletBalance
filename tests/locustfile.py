@@ -14,3 +14,7 @@ class WalletApiUser(HttpUser):
     def test_wallet_balance22(self):
         self.client.get("/api/v1/wallets/0f8c72f8-149b-4c14-ad31-1949303c633d")
 
+    @task
+    def update_balance(self):
+        self.client.post("/api/v1/wallets/0f8c72f8-149b-4c14-ad31-1949303c633d/operation", json={"operation_type": "DEPOSIT", "amount": 50})
+
